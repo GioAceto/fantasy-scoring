@@ -1,25 +1,22 @@
 calculateScore = (player) => {
-    let passing = player.stats.passing
-    let rushing = player.stats.rushing
-    let receiving = player.stats.receiving
-    let kickReturn = player.stats.return.kickreturn
-    let puntReturn = player.stats.return.puntreturn
-    let fieldgoals = player.stats.fieldgoals
-    let xp = player.stats.xp
-
+    let result;
     if (player.position === 'QB') {
-        return (passing.yards / 25) + (passing.touchdowns * 6) + (passing.interceptions * -3) +
-            (rushing.yards / 10) + (rushing.touchdowns * 6) + (rushing.fumbles * -3)
+        result = (player.stats.passing.yards / 25) + (player.stats.passing.touchdowns * 6) + (player.stats.passing.interceptions * -3) +
+            (player.stats.rushing.yards / 10) + (player.stats.rushing.touchdowns * 6) + (player.stats.rushing.fumbles * -3)
     } else if (player.position === 'RB') {
-        return (rushing.yards / 10) + (rushing.touchdowns * 6) + (rushing.fumbles * -3) +
-            (receiving.receptions) + (receiving.yards / 10) + (receiving.touchdowns * 6) +
-            (receiving.fumbles * -3) + (kickReturn)
+        result = (player.stats.rushing.yards / 10) + (player.stats.rushing.touchdowns * 6) + (player.stats.rushing.fumbles * -3) +
+            (player.stats.receiving.receptions) + (player.stats.receiving.yards / 10) + (player.stats.receiving.touchdowns * 6) +
+            (player.stats.receiving.fumbles * -3) + (player.stats.return.kickreturn.yards / 15) + (player.stats.return.kickreturn.touchdowns * 6) +
+            (player.stats.return.kickreturn.fumbles * -3) + (player.stats.return.puntreturn.yards / 15) + (player.stats.return.puntreturn.touchdowns * 6) +
+            (player.stats.return.puntreturn.fumbles * -3)
     } else if (player.position === 'WR') {
-
+        result = 1;
     } else if (player.position === 'TE') {
-
+        result = 2;
+    } else {
+        result = 0;
     }
-    return 0;
+    return result;
 }
 
 module.exports = calculateScore
